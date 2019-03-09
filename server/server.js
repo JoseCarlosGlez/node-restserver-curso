@@ -46,5 +46,5 @@ app.delete('/usuario', function(req, res) {
 });
 
 app.listen(process.env.PORT, function() {
-    console.log('Example app listening on port 3000!');
+    console.log(process.env.PORT);
 });
