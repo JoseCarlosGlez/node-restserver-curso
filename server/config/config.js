@@ -22,7 +22,7 @@ process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
 //================================
 // SEED
 // ===============================
-process.env.SEED = ''
+process.env.SEED = process.env.SEED;
 
 //================================
 // BD
