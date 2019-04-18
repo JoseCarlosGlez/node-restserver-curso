@@ -5,9 +5,13 @@ const app = express();
 
 const Usuario = require('../models/Usuario');
 
+const { verificaToken, verificarRol } = require('../middlewares/autenticacion');
 
 
-app.get('/usuario', function(req, res) {
+
+app.get('/usuario', verificaToken, (req, res) => {
+
+
 
     let desde = Number(req.query.desde || 0);
 
@@ -22,6 +26,12 @@ app.get('/usuario', function(req, res) {
         }
 
         Usuario.count({ estado: 'true' }, (err, conteo) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                })
+            }
             res.json({
                 ok: true,
                 usuarios,
@@ -35,7 +45,7 @@ app.get('/usuario', function(req, res) {
 });
 
 // POST
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificarRol], function(req, res) {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -63,30 +73,11 @@ app.post('/usuario', function(req, res) {
 
 
 
-    console.log('asdadsasfgwreq');
-
-
-    // if (body.nombre === undefined) {
-
-    //     console.log('Entro');
-    //     res.status(400).json({
-    //         ok: false,
-    //         mensaje: 'El nombre es necesario'
-    //     })
-
-    // } else {
-    //     res.json({
-    //         persona: body
-    //     });
-
-    // }
-
-
 
 });
 
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificarRol], function(req, res) {
 
     let id = req.params.id
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -107,7 +98,7 @@ app.put('/usuario/:id', function(req, res) {
     })
 });
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificarRol], function(req, res) {
 
     let id = req.params.id;
     let cambiarEstado = {
