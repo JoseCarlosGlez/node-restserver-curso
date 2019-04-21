@@ -9,6 +9,7 @@ const { verificaToken, verificarRol } = require('../middlewares/autenticacion');
 
 
 
+
 app.get('/usuario', verificaToken, (req, res) => {
 
 

@@ -7,6 +7,14 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+const path = require('path')
+
+
+//Cors
+
+const cors = require('cors');
+
+app.use(cors({ origin: "http://localhost:4200" }));
 
 
 
@@ -21,6 +29,9 @@ app.use(bodyParser.json());
 app.use(require('./routes/index'))
 
 
+//habilitar el public
+
+app.use(express.static(path.resolve(__dirname, '../public')))
 
 
 

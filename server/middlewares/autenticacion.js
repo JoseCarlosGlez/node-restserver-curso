@@ -11,11 +11,13 @@ let verificaToken = (req, res, next) => {
         if (err) {
             return res.status(401).json({
                 ok: false,
-                err
+                err: {
+                    message: "Token invalido"
+                }
             })
         }
 
-        console.log(decoded);
+        console.log("decode", decoded);
 
         req.usuario = decoded.usuario;
         next();
