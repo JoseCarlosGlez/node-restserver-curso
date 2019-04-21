@@ -8,6 +8,7 @@ let verificaToken = (req, res, next) => {
     console.log(token);
 
     jwt.verify(token, process.env.SEED, (err, decoded) => {
+
         if (err) {
             return res.status(401).json({
                 ok: false,
